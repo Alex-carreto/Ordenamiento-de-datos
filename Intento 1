@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int find(int b[], int l, int *index, int mode)
+{
+    int a;
+    
+    if (mode == 0) 
+	{
+        a = 1000000;
+        *index = -1;
+        
+        for (int i = 0; i < l; i++) 
+		{
+            if (b[i] < a) {
+                a = b[i];
+                *index = i;
+            }
+        }
+    } else if (mode == 1) 
+	{
+        a = -1000000;
+        *index = -1;
+        
+        for (int i = 0; i < l; i++) 
+		{
+            if (b[i] > a) {
+                a = b[i];
+                *index = i;
+            }
+        }
+    } 
+    return a;
+}
+
+void insertionSort(int arr[], int n) 
+{
+    for (int i = 1; i < n; i++) 
+	{
+        int key = arr[i];
+        int j = i - 1;
+        
+        while (j >= 0 && arr[j] > key) 
+		{
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        
+        arr[j + 1] = key;
+    }
+}
+
+int main() 
+{
+    srand(time(NULL));
+
+    int l = 30;
+    int b[l];
+
+    for (int i = 0; i < l; i++) 
+	{
+        b[i] = rand() % 100 - 50;
+        printf("%d, ", b[i]);
+    }
+
+    insertionSort(b, l);
+
+    int minIndex, maxIndex;
+    int minValue = find(b, l, &minIndex, 0);
+    int maxValue = find(b, l, &maxIndex, 1);
+
+    printf("\n\n\Lista ordenada: ");
+    for (int i = 0; i < l; i++) 
+	{
+        printf("%d, ", b[i]);
+    }
+
+    printf("\n\nMin value: \t%d", minValue, minIndex);
+    printf("\nMax value: \t%d", maxValue, maxIndex);
+
+    return 0;
+}
