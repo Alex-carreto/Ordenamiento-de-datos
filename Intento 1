@@ -51,13 +51,61 @@ void insertionSort(int arr[], int n)
     }
 }
 
+float calculateMean(int arr[], int l) 
+{
+    float sum = 0;
+    for (int i = 0; i < l; i++) 
+	{
+        sum += arr[i];
+    }
+    return sum / l;
+}
+
+int calculateMode(int arr[], int l) 
+{
+    int maxCount = 0, mode = -1, count;
+    for (int i = 0; i < l; i++) {
+        count = 0;
+        for (int j = 0; j < l; j++) 
+		{
+            if (arr[j] == arr[i]) 
+			{
+                count++;
+            }
+        }
+        if (count > maxCount) 
+		{
+            maxCount = count;
+            mode = arr[i];
+        }
+    }
+    return mode;
+}
+
+float calculateMedian(int arr[], int l) 
+{
+    if (l % 2 != 0) 
+	{
+        return (float)arr[l / 2];
+    } 
+	else 
+	{
+        return (float)(arr[(l - 1) / 2] + arr[l / 2]) / 2.0;
+    }
+}
+
+
 int main() 
 {
     srand(time(NULL));
+    
+    int l;
+    printf("Numero de elementos a ordenar: ");
+    scanf("%d", &l);
 
-    int l = 30;
     int b[l];
 
+ 	printf("Lista sin ordenar: ");
     for (int i = 0; i < l; i++) 
 	{
         b[i] = rand() % 100 - 50;
@@ -76,8 +124,17 @@ int main()
         printf("%d, ", b[i]);
     }
 
-    printf("\n\nMin value: \t%d", minValue, minIndex);
-    printf("\nMax value: \t%d", maxValue, maxIndex);
+    printf("\n\nMin value: %d", minValue, minIndex);
+    printf("\nMax value: %d", maxValue, maxIndex);
+    
+    float mean = calculateMean(b, l);
+    printf("\nMean: %.2f", mean);
+
+    int mode = calculateMode(b, l);
+    printf("\nMode: %d", mode);
+
+    float median = calculateMedian(b, l);
+    printf("\nMedian: %.2f\n", median);
 
     return 0;
 }
